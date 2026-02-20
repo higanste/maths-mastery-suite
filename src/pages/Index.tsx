@@ -3,7 +3,8 @@ import QuestionGenerator from '@/components/QuestionGenerator';
 import StopwatchPanel from '@/components/StopwatchPanel';
 import ClassRoster from '@/components/ClassRoster';
 import CreditsSection from '@/components/CreditsSection';
-import { Calculator, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
+import { MathBlastLogo } from '@/components/MathBlastLogo';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
@@ -29,7 +30,7 @@ const Index = () => {
         {/* Header */}
         <header className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
           <div className="flex items-center justify-center gap-4 mb-3">
-            <Calculator className="w-8 h-8 sm:w-10 sm:h-10 text-primary opacity-80 animate-float" />
+            <MathBlastLogo className="w-12 h-12 sm:w-16 sm:h-16 animate-float" />
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black text-foreground tracking-tight drop-shadow-2xl">
               MATH<span className="text-transparent bg-clip-text bg-gradient-hero">BLAST</span>
             </h1>
