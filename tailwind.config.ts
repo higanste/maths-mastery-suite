@@ -18,6 +18,11 @@ export default {
         display: ['Orbitron', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
+      backgroundImage: {
+        'gradient-hero': 'var(--gradient-hero)',
+        'gradient-fire': 'var(--gradient-fire)',
+        'gradient-matrix': 'var(--gradient-matrix)',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

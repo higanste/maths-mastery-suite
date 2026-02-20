@@ -56,7 +56,8 @@
     /* Emerald */
     --glow-pink: 330 80% 65%;
     /* Rose */
-    --gradient-hero: linear-gradient(135deg, hsl(210 100% 65%), hsl(260 80% 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(187 100% 60%), hsl(280 100% 75%));
+    /* Lighter gradient for dark mode */
     --gradient-fire: linear-gradient(135deg, hsl(25 90% 60%), hsl(0 80% 55%));
     --gradient-matrix: linear-gradient(180deg, hsl(156 70% 50% / 0.08), transparent);
     --shadow-neon-cyan: 0 4px 24px -4px hsl(210 100% 65% / 0.3), 0 0 16px -2px hsl(210 100% 65% / 0.2);
@@ -116,10 +117,11 @@
   }
 
   .glass {
-    background: hsl(222 40% 10% / 0.5);
-    backdrop-filter: blur(24px);
-    border: 1px solid hsl(222 30% 25% / 0.4);
-    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.05);
+    background: hsl(222 40% 10% / 0.25);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid hsl(222 30% 30% / 0.2);
+    box-shadow: inset 0 1px 1px hsl(0 0% 100% / 0.05), 0 8px 32px hsl(0 0% 0% / 0.3);
   }
 
   .glass-orange {
