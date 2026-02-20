@@ -17,7 +17,7 @@ const FALLBACK_ROASTS = [
   "{name}, did you sleep through Mr. Yeung's class today?",
   "Error 404: {name}'s math skills not found.",
   "Bro {name}, even ChatGPT is confused by your math.",
-  "MathsBot is crying right now because of {name}.",
+  "MathsBlast is crying right now because of {name}.",
   "Bruh {name}. 💀",
   "Your math isn't mathing, {name}.",
   "This ain't it, {name}."
@@ -59,10 +59,12 @@ export default function QuestionGenerator() {
   const generateNewRoast = useCallback(() => {
     // Pick a random person from roster
     const member = CLASS_MEMBERS[Math.floor(Math.random() * CLASS_MEMBERS.length)];
+    const isVIP = member.name === 'Mr. Yeung' || member.name === 'Arslan Sohail';
 
     let roastText = "";
-    // 50% chance to use their specific roast, 50% chance to use generic template
-    if (Math.random() > 0.5 && member.roasts && member.roasts.length > 0) {
+    // VIPs always get their custom messages (praises + gentle roasts)
+    // Everyone else has a 50/50 mix of custom roasts and generic template roasts
+    if (isVIP || (Math.random() > 0.5 && member.roasts && member.roasts.length > 0)) {
       roastText = member.roasts[Math.floor(Math.random() * member.roasts.length)];
     } else {
       const template = FALLBACK_ROASTS[Math.floor(Math.random() * FALLBACK_ROASTS.length)];
