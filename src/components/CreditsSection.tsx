@@ -19,26 +19,42 @@ export default function CreditsSection() {
         <p className="font-display text-xs tracking-[0.3em] text-muted-foreground uppercase">
           — Credits —
         </p>
-        
-        <div className="space-y-1.5">
-          <p className="text-sm text-muted-foreground">
-            <span className="text-foreground/60">Backends by</span>{' '}
-            <span className="text-primary font-semibold">ChatGPT</span>
-          </p>
-          <p className="text-sm text-muted-foreground">
-            <span className="text-foreground/60">Creative Producer</span>{' '}
-            <span className="text-secondary font-semibold">ChatGPT</span>
-          </p>
-          <p className="text-sm text-muted-foreground">
-            <span className="text-foreground/60">Scripted by</span>{' '}
-            <span className="text-accent font-semibold cursor-pointer hover:scale-110 inline-block transition-transform" onClick={handleEasterEgg}>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-sm">
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-muted-foreground">Coded by</span>
+            <span className="font-bold text-glow-cyan text-primary">Antigravity</span>
+          </div>
+
+          <div className="w-1 h-1 rounded-full bg-border hidden sm:block" />
+
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-muted-foreground">Idea from</span>
+            <a
+              href="https://mathsbot.com/questionGenerator"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-glow-orange text-secondary hover:underline transition-all"
+            >
+              MathsBot
+            </a>
+          </div>
+
+          <div className="w-1 h-1 rounded-full bg-border hidden sm:block" />
+
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-muted-foreground">Creative Producer</span>
+            <span className="font-bold text-foreground">ChatGPT</span>
+          </div>
+
+          <div className="w-1 h-1 rounded-full bg-border hidden sm:block" />
+
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-muted-foreground">Scripted by</span>
+            <span className="font-bold text-accent cursor-pointer hover:scale-110 inline-block transition-transform" onClick={handleEasterEgg}>
               Arslan
             </span>
-          </p>
-          <p className="text-sm text-muted-foreground">
-            <span className="text-foreground/60">Built for</span>{' '}
-            <span className="text-foreground/80 font-semibold">Mr. Yeung's Class @ Dakota Collegiate</span>
-          </p>
+          </div>
         </div>
 
         {easterEgg >= 5 && (
