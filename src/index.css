@@ -46,16 +46,21 @@
     --sidebar-ring: 187 100% 50%;
 
     /* Custom tokens */
-    --glow-cyan: 187 100% 50%;
-    --glow-orange: 25 100% 55%;
-    --glow-purple: 280 80% 60%;
-    --glow-green: 145 80% 50%;
-    --glow-pink: 330 90% 60%;
-    --gradient-hero: linear-gradient(135deg, hsl(187 100% 50%), hsl(280 80% 60%));
-    --gradient-fire: linear-gradient(135deg, hsl(25 100% 55%), hsl(0 85% 55%));
-    --gradient-matrix: linear-gradient(180deg, hsl(145 80% 50% / 0.1), transparent);
-    --shadow-neon-cyan: 0 0 20px hsl(187 100% 50% / 0.4), 0 0 60px hsl(187 100% 50% / 0.1);
-    --shadow-neon-orange: 0 0 20px hsl(25 100% 55% / 0.4), 0 0 60px hsl(25 100% 55% / 0.1);
+    --glow-cyan: 210 100% 65%;
+    /* Soft electric blue */
+    --glow-orange: 25 90% 60%;
+    /* Warm amber */
+    --glow-purple: 260 80% 65%;
+    /* Deep indigo/violet */
+    --glow-green: 156 70% 50%;
+    /* Emerald */
+    --glow-pink: 330 80% 65%;
+    /* Rose */
+    --gradient-hero: linear-gradient(135deg, hsl(210 100% 65%), hsl(260 80% 65%));
+    --gradient-fire: linear-gradient(135deg, hsl(25 90% 60%), hsl(0 80% 55%));
+    --gradient-matrix: linear-gradient(180deg, hsl(156 70% 50% / 0.08), transparent);
+    --shadow-neon-cyan: 0 4px 24px -4px hsl(210 100% 65% / 0.3), 0 0 16px -2px hsl(210 100% 65% / 0.2);
+    --shadow-neon-orange: 0 4px 24px -4px hsl(25 90% 60% / 0.3), 0 0 16px -2px hsl(25 90% 60% / 0.2);
   }
 }
 
@@ -69,11 +74,14 @@
     font-family: 'Space Grotesk', sans-serif;
   }
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     font-family: 'Orbitron', sans-serif;
   }
 
-  code, .mono {
+  code,
+  .mono {
     font-family: 'JetBrains Mono', monospace;
   }
 }
@@ -108,63 +116,122 @@
   }
 
   .glass {
-    background: hsl(222 40% 10% / 0.7);
-    backdrop-filter: blur(20px);
-    border: 1px solid hsl(187 100% 50% / 0.15);
+    background: hsl(222 40% 10% / 0.5);
+    backdrop-filter: blur(24px);
+    border: 1px solid hsl(222 30% 25% / 0.4);
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.05);
   }
 
   .glass-orange {
-    background: hsl(25 100% 55% / 0.08);
-    backdrop-filter: blur(20px);
-    border: 1px solid hsl(25 100% 55% / 0.2);
+    background: hsl(25 90% 60% / 0.05);
+    backdrop-filter: blur(24px);
+    border: 1px solid hsl(25 90% 60% / 0.15);
   }
 
   .scanline {
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      hsl(187 100% 50% / 0.03) 2px,
-      hsl(187 100% 50% / 0.03) 4px
-    );
+    background: radial-gradient(circle at center, transparent 0%, hsl(222 47% 6% / 0.8) 100%),
+      repeating-linear-gradient(0deg,
+        transparent,
+        transparent 2px,
+        hsl(210 100% 65% / 0.015) 2px,
+        hsl(210 100% 65% / 0.015) 4px);
   }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-4px) rotate(-1deg); }
-  40% { transform: translateX(4px) rotate(1deg); }
-  60% { transform: translateX(-2px) rotate(-0.5deg); }
-  80% { transform: translateX(2px) rotate(0.5deg); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-4px) rotate(-1deg);
+  }
+
+  40% {
+    transform: translateX(4px) rotate(1deg);
+  }
+
+  60% {
+    transform: translateX(-2px) rotate(-0.5deg);
+  }
+
+  80% {
+    transform: translateX(2px) rotate(0.5deg);
+  }
 }
 
 @keyframes confetti-fall {
-  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 @keyframes typewriter-cursor {
-  0%, 100% { border-right-color: hsl(187 100% 50%); }
-  50% { border-right-color: transparent; }
+
+  0%,
+  100% {
+    border-right-color: hsl(187 100% 50%);
+  }
+
+  50% {
+    border-right-color: transparent;
+  }
 }
 
 @keyframes slide-up {
-  from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes counter-tick {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }

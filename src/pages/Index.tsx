@@ -7,7 +7,7 @@ import { Calculator, Sparkles } from 'lucide-react';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
-  
+
   useEffect(() => {
     setMounted(true);
     // Preload voices for TTS
@@ -21,20 +21,19 @@ const Index = () => {
       {/* Scanline overlay */}
       <div className="fixed inset-0 scanline pointer-events-none z-50" />
 
-      {/* Background effects */}
-      <div className="fixed top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="fixed bottom-0 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="fixed top-1/2 left-1/2 w-96 h-96 bg-accent/3 rounded-full blur-[150px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
+      {/* Subtle modern depth effects (instead of solid bright neon orbs) */}
+      <div className="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 rounded-full blur-[160px] pointer-events-none" />
+      <div className="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent/10 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         {/* Header */}
         <header className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <Calculator className="w-8 h-8 sm:w-10 sm:h-10 text-primary animate-float" />
-            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black text-foreground text-glow-cyan tracking-wider">
-              MATH<span className="text-secondary">BLAST</span>
+          <div className="flex items-center justify-center gap-4 mb-3">
+            <Calculator className="w-8 h-8 sm:w-10 sm:h-10 text-primary opacity-80 animate-float" />
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black text-foreground tracking-tight drop-shadow-2xl">
+              MATH<span className="text-transparent bg-clip-text bg-gradient-hero">BLAST</span>
             </h1>
-            <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-secondary animate-float" style={{ animationDelay: '1s' }} />
+            <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-accent opacity-80 animate-float" style={{ animationDelay: '1s' }} />
           </div>
           <p className="text-muted-foreground text-sm sm:text-base">
             Mr. Yeung's Ultimate Question Generator • Dakota Collegiate

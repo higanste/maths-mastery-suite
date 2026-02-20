@@ -17,7 +17,7 @@ export default function QuestionGenerator() {
     setIsGenerating(true);
     setShowAnswers(false);
     setRevealedAnswers(new Set());
-    
+
     setTimeout(() => {
       const newQuestions = generateQuestions(topic, questionCount, difficulty);
       setQuestions(newQuestions);
@@ -53,7 +53,7 @@ export default function QuestionGenerator() {
           <Zap className="w-5 h-5 text-primary" />
           <h2 className="font-display text-sm tracking-wider text-primary uppercase">Question Settings</h2>
         </div>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Topic selector */}
           <div>
@@ -100,18 +100,17 @@ export default function QuestionGenerator() {
         <div className="flex flex-wrap gap-3 mt-4">
           <button
             onClick={handleGenerate}
-            className={`flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-xl font-bold text-sm hover:opacity-90 transition-all hover:scale-105 box-glow-cyan ${
-              isGenerating ? 'animate-shake' : ''
-            }`}
+            className={`flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-xl font-bold text-sm hover:opacity-90 transition-all shadow-[0_0_15px_-3px_hsl(var(--primary)/0.3)] hover:shadow-[0_0_25px_-5px_hsl(var(--primary)/0.5)] ${isGenerating ? 'animate-shake' : ''
+              }`}
           >
             {isGenerating ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
             Generate Questions
           </button>
-          
+
           {questions.length > 0 && (
             <button
               onClick={handleRevealAll}
-              className="flex items-center gap-2 bg-secondary text-secondary-foreground px-5 py-2.5 rounded-xl font-bold text-sm hover:opacity-90 transition-all hover:scale-105 box-glow-orange"
+              className="flex items-center gap-2 bg-secondary text-secondary-foreground px-5 py-2.5 rounded-xl font-bold text-sm hover:opacity-90 transition-all shadow-[0_0_15px_-3px_hsl(var(--secondary)/0.3)] hover:shadow-[0_0_25px_-5px_hsl(var(--secondary)/0.5)]"
             >
               {showAnswers ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               {showAnswers ? 'Hide Answers' : 'Reveal Answers'}
@@ -146,9 +145,8 @@ export default function QuestionGenerator() {
                 </p>
 
                 {/* Answer */}
-                <div className={`mt-3 text-center transition-all duration-300 ${
-                  isRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-                }`}>
+                <div className={`mt-3 text-center transition-all duration-300 ${isRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                  }`}>
                   <div className="bg-glow-green/10 border border-glow-green/30 rounded-lg py-2 px-3">
                     <span className="font-mono text-lg font-bold text-glow-green text-glow-green">
                       = {q.answer}
