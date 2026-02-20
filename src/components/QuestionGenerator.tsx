@@ -1,39 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { generateQuestions, TOPICS, type MathOperation, type MathQuestion } from '@/lib/mathGenerator';
 import StopwatchPanel from '@/components/StopwatchPanel';
-import { playGenerate, playReveal, playClick } from '@/lib/sounds';
+import { playGenerate, playReveal, playClick, speakText } from '@/lib/sounds';
+import { CLASS_MEMBERS } from '@/lib/classData';
 import { Sparkles, Eye, EyeOff, RefreshCw, Zap, Maximize, Minimize } from 'lucide-react';
 
-const ROASTS = [
-  "Even my grandma calculates faster than you!",
-  "Are you guessing, or is that actually your final answer?",
-  "I've seen potatoes with better math skills.",
-  "You might want to double-check that... or just give up.",
-  "Did you use a calculator, or flip a coin?",
-  "At least you're confidently incorrect.",
-  "Math is hard, but it shouldn't be THIS hard for you.",
-  "Did you sleep through Mr. Yeung's class today?",
-  "Error 404: Math skills not found.",
-  "My pet rock could have solved that faster.",
-  "You put the 'no' in denominator.",
-  "I'm not saying you're bad at math, but 2+2=5 is not a vibe.",
-  "Are we doing math or modern art with these numbers?",
-  "Mr. Yeung is typing... to tell you to try again.",
-  "That answer is so wrong, it broke the space-time continuum.",
-  "Is your brain lagging, or was that your actual answer?",
-  "Did you calculate that on a toaster?",
-  "I'm revoking your calculator privileges.",
-  "If wrong answers were currency, you'd be a billionaire.",
-  "Bro, even ChatGPT is confused by your math.",
-  "MathsBot is crying right now.",
-  "That was a solid guess... for a different question.",
-  "I think your brain went on Do Not Disturb mode.",
-  "Bruh. 💀",
-  "Is it math or magic? Because that answer just disappeared from reality.",
-  "You definitely used the random number generator technique.",
-  "Please tell me you were holding the calculator upside down.",
-  "Your math isn't mathing.",
-  "This ain't it, chief."
+// Fallback roasts if no specific one is chosen
+const FALLBACK_ROASTS = [
+  "{name}, even my grandma calculates faster than you!",
+  "{name}, are you guessing, or is that actually your final answer?",
+  "{name}... I've seen potatoes with better math skills.",
+  "{name}, you might want to double-check that... or just give up.",
+  "{name}, did you use a calculator, or flip a coin?",
+  "At least you're confidently incorrect, {name}.",
+  "Math is hard, {name}, but it shouldn't be THIS hard for you.",
+  "{name}, did you sleep through Mr. Yeung's class today?",
+  "Error 404: {name}'s math skills not found.",
+  "Bro {name}, even ChatGPT is confused by your math.",
+  "MathsBot is crying right now because of {name}.",
+  "Bruh {name}. 💀",
+  "Your math isn't mathing, {name}.",
+  "This ain't it, {name}."
 ];
 
 export default function QuestionGenerator() {
@@ -46,6 +33,45 @@ export default function QuestionGenerator() {
   const [revealedAnswers, setRevealedAnswers] = useState<Set<string>>(new Set());
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [currentRoast, setCurrentRoast] = useState("");
+
+  // Sync fullscreen state with Browser API
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    playClick();
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
+
+  const generateNewRoast = useCallback(() => {
+    // Pick a random person from roster
+    const member = CLASS_MEMBERS[Math.floor(Math.random() * CLASS_MEMBERS.length)];
+
+    let roastText = "";
+    // 50% chance to use their specific roast, 50% chance to use generic template
+    if (Math.random() > 0.5 && member.roasts && member.roasts.length > 0) {
+      roastText = member.roasts[Math.floor(Math.random() * member.roasts.length)];
+    } else {
+      const template = FALLBACK_ROASTS[Math.floor(Math.random() * FALLBACK_ROASTS.length)];
+      roastText = template.replace("{name}", member.name);
+    }
+
+    setCurrentRoast(roastText);
+    speakText(roastText);
+  }, []);
 
   const handleGenerate = () => {
     playGenerate();
@@ -64,9 +90,10 @@ export default function QuestionGenerator() {
     playReveal();
     setShowAnswers(!showAnswers);
     if (!showAnswers) {
-      setCurrentRoast(ROASTS[Math.floor(Math.random() * ROASTS.length)]);
+      generateNewRoast();
     } else {
       setCurrentRoast("");
+      window.speechSynthesis?.cancel(); // stop talking if hidden
     }
   };
 
@@ -86,7 +113,7 @@ export default function QuestionGenerator() {
   }, []);
 
   return (
-    <div className={`space-y-6 ${isFullscreen ? 'fixed inset-0 z-[100] bg-background/95 backdrop-blur-xl p-8 sm:p-12 overflow-y-auto' : ''}`}>
+    <div className={`space-y-6 ${isFullscreen ? 'fixed inset-0 z-[100] bg-background/95 backdrop-blur-xl p-8 sm:p-12 overflow-hidden flex flex-col h-screen' : ''}`}>
       {/* Controls bar (Hidden in fullscreen) */}
       {!isFullscreen && (
         <div className="glass rounded-xl p-4 sm:p-6">
@@ -161,7 +188,7 @@ export default function QuestionGenerator() {
 
             {/* Fullscreen Toggle */}
             <button
-              onClick={() => { playClick(); setIsFullscreen(true); }}
+              onClick={toggleFullscreen}
               className="flex items-center gap-2 bg-muted text-foreground px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-muted/80 transition-all ml-auto"
             >
               <Maximize className="w-4 h-4" />
@@ -195,7 +222,7 @@ export default function QuestionGenerator() {
               {showAnswers ? 'Hide Answers' : 'Reveal Answers'}
             </button>
             <button
-              onClick={() => { playClick(); setIsFullscreen(false); }}
+              onClick={toggleFullscreen}
               className="flex items-center gap-2 bg-muted text-foreground px-6 py-3 rounded-xl font-bold text-base hover:bg-muted/80 transition-all"
             >
               <Minimize className="w-5 h-5" />
@@ -212,7 +239,7 @@ export default function QuestionGenerator() {
             🔥 {currentRoast} 🔥
           </p>
           <button
-            onClick={() => setCurrentRoast(ROASTS[Math.floor(Math.random() * ROASTS.length)])}
+            onClick={generateNewRoast}
             className="text-xs sm:text-sm bg-secondary/10 hover:bg-secondary/20 text-secondary px-4 py-2 rounded-full font-bold transition-all mt-2 flex items-center gap-2"
           >
             <RefreshCw className="w-3 h-3" />
@@ -221,9 +248,9 @@ export default function QuestionGenerator() {
         </div>
       )}
 
-      {/* Questions grid */}
+      {/* Questions grid (allow internal scrolling if needed in fullscreen, but hide main scroll bar) */}
       {questions.length > 0 && (
-        <div className={`grid gap-4 ${isFullscreen ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'}`}>
+        <div className={`grid gap-4 ${isFullscreen ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3 overflow-y-auto flex-1 padding-bottom-safe' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'}`}>
           {questions.map((q, i) => {
             const isRevealed = showAnswers || revealedAnswers.has(q.id);
             return (
