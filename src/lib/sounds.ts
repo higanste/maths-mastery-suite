@@ -1,6 +1,10 @@
-// Sound effects using Web Audio API - no external dependencies needed
+declare global {
+  interface Window {
+    webkitAudioContext: typeof AudioContext;
+  }
+}
 
-const audioCtx = () => new (window.AudioContext || (window as any).webkitAudioContext)();
+const audioCtx = () => new (window.AudioContext || window.webkitAudioContext)();
 
 export function playClick() {
   const ctx = audioCtx();
@@ -108,7 +112,7 @@ export function speakText(text: string) {
     utterance.pitch = 1.0;
     // Try to get a good English voice
     const voices = window.speechSynthesis.getVoices();
-    const englishVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google')) 
+    const englishVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google'))
       || voices.find(v => v.lang.startsWith('en-US'))
       || voices.find(v => v.lang.startsWith('en'));
     if (englishVoice) utterance.voice = englishVoice;
